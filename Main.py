@@ -64,15 +64,9 @@ class RpnParser(object):
         def is_mid_op(op):
             return op == '*' or op =='/'
 
-        # op2_lower = op2 == '+' or op2 == '-'
-        if op1 == '(' or op2 == '(':
-            return True
-        if (op1 == '^') and (is_mid_op(op2) or is_lower_op(op2)):
-            return True
-        elif (op1 == '*' or op1 == '/') and is_lower_op(op2):
-            return True
-        else:
-            return False
+        return ( op1 == '(' or op2 == '(' ) \
+               or ( (op1 == '^') and (is_mid_op(op2) or is_lower_op(op2)) ) \
+               or ( is_mid_op(op1) and is_lower_op(op2) )
 
     def isLower(self, op1, op2):
         return not self.isGreater(op1, op2)
@@ -85,5 +79,5 @@ class RpnParser(object):
 
 
 if __name__ == '__main__':
-    parser = RpnParser('((A+B)*C-(D-E)^(F+G))')
+    parser = RpnParser('(A+B)*C+(A+B)')
     print(parser.parse())
