@@ -58,12 +58,18 @@ class RpnParser(object):
                 break
 
     def isGreater(self, op1, op2):
-        op2_lower = op2 == '+' or op2 == '-'
+        def is_lower_op(op):
+            return op == '+' or op == '-'
+
+        def is_mid_op(op):
+            return op == '*' or op =='/'
+
+        # op2_lower = op2 == '+' or op2 == '-'
         if op1 == '(' or op2 == '(':
             return True
-        if (op1 == '^') and (op2 == '*' or op2 == '/' or op2_lower):
+        if (op1 == '^') and (is_mid_op(op2) or is_lower_op(op2)):
             return True
-        elif (op1 == '*' or op1 == '/') and op2_lower:
+        elif (op1 == '*' or op1 == '/') and is_lower_op(op2):
             return True
         else:
             return False
