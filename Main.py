@@ -52,10 +52,9 @@ class RpnParser(object):
 
     def pop_until_greater(self, i):
         while not self.operator_stack.isEmpty():
-            if self.isLower(i, self.operator_stack.peek()):
-                self.postfix_list.append(self.operator_stack.pop())
-            else:
+            if self.isGreater(i, self.operator_stack.peek()):
                 break
+            self.postfix_list.append(self.operator_stack.pop())
 
     def isGreater(self, op1, op2):
         def is_lower_op(op):
@@ -67,9 +66,6 @@ class RpnParser(object):
         return ( op1 == '(' or op2 == '(' ) \
                or ( (op1 == '^') and (is_mid_op(op2) or is_lower_op(op2)) ) \
                or ( is_mid_op(op1) and is_lower_op(op2) )
-
-    def isLower(self, op1, op2):
-        return not self.isGreater(op1, op2)
 
     def isOperand(self, any_string):
         return re.search('\\w', any_string)
