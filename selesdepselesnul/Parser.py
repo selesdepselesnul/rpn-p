@@ -1,6 +1,7 @@
 import re
 
 
+# author : Moch Deden (https://github.com/selesdepelesnul)
 class Stack(list):
     def push(self, value):
         self.append(value)
@@ -14,7 +15,7 @@ class Stack(list):
 
 class RpnParser(object):
     def __init__(self, arit_expr):
-        self.infix_list = arit_expr
+        self.infix_list = filter(lambda x: x != ' ', arit_expr)
         self.operator_stack = Stack()
         self.postfix_list = []
 
@@ -35,10 +36,10 @@ class RpnParser(object):
                     self.pop_until_greater(i)
                     self.operator_stack.push(i)
             else:
-                return ''
+                return []
 
         self.fill_postfix_stack()
-        return str(self.postfix_list)
+        return self.postfix_list
 
     def fill_postfix_stack(self):
         while not self.operator_stack.is_empty():
@@ -71,4 +72,3 @@ class RpnParser(object):
 
     def is_operator(self, any_string):
         return re.search('[\+\-\*\/\^\(\)]', any_string)
-
