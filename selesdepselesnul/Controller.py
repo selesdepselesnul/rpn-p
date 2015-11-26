@@ -14,9 +14,9 @@ class MainWindowController(QWidget):
         parser = RpnParser(self.ui.infix_expr_line_edit.text())
         parsed_list = parser.parse()
 
-        self.ui.postfix_expr_line_edit.clear()
+        self.ui.postfix_expr_text_edit.clear()
         if parsed_list != []:
-            self.ui.postfix_expr_line_edit.setText(str(parsed_list))
+            self.ui.postfix_expr_text_edit.setText(str(parsed_list))
         else:
             invalid_message_box = QMessageBox()
             invalid_message_box.setText('Expressi yang dimasukan tidak valid!')
