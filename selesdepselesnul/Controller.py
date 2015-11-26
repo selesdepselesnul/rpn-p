@@ -4,6 +4,8 @@ from selesdepselesnul.Parser import RpnParser
 
 # author : Moch Deden (https://github.com/selesdepelesnul)
 class MainWindowController(QWidget):
+
+
     def __init__(self):
         super().__init__()
         self.ui = uic.loadUi('selesdepselesnul/main.ui', self)
