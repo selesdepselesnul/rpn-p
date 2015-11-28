@@ -14,23 +14,23 @@ class Stack(list):
 
 
 class RpnParser(object):
-    def __init__(self, arit_expr):
-        self.infix_list = filter(lambda x: x != ' ', arit_expr)
+    def __init__(self, arith_expr):
+        self.infix_list = filter(lambda x: x != ' ', arith_expr)
         self.operator_stack = Stack()
         self.postfix_list = []
 
     def parse(self):
         for i in self.infix_list:
-            if self.is_operand(i):
+            if RpnParser.__is_operand(i):
                 self.postfix_list.append(i)
-            elif self.is_operator(i):
+            elif RpnParser.__is_operator(i):
                 if self.operator_stack.is_empty():
                     self.operator_stack.push(i)
                 elif i == '(':
                     self.operator_stack.push(i)
                 elif i == ')':
                     self.pop_operator_to_end_expr()
-                elif self.is_greater(i, self.operator_stack.peek()):
+                elif self.__is_greater(i, self.operator_stack.peek()):
                     self.operator_stack.push(i)
                 else:
                     self.pop_until_greater(i)
@@ -52,26 +52,26 @@ class RpnParser(object):
 
     def pop_until_greater(self, i):
         while not self.operator_stack.is_empty():
-            if self.is_greater(i, self.operator_stack.peek()):
+            if RpnParser.__is_greater(i, self.operator_stack.peek()):
                 break
             self.postfix_list.append(self.operator_stack.pop())
 
     @staticmethod
-    def is_greater(op1, op2):
+    def __is_greater(op1, op2):
         def is_lower_op(op):
             return op == '+' or op == '-'
 
         def is_mid_op(op):
-            return op == '*' or op =='/'
+            return op == '*' or op == '/'
 
         return (op1 == '(' or op2 == '(') or \
                ((op1 == '^') and (is_mid_op(op2) or is_lower_op(op2))) or \
-               ( is_mid_op(op1) and is_lower_op(op2) )
+               (is_mid_op(op1) and is_lower_op(op2))
 
     @staticmethod
-    def is_operand(any_string):
+    def __is_operand(any_string):
         return re.search('[a-zA-Z]', any_string)
 
     @staticmethod
-    def is_operator(any_string):
-        return re.search('[\+\-\*\/\^\(\)]', any_string)
+    def __is_operator(any_string):
+        return re.search('[\+\-\*/\^\(\)]', any_string)
