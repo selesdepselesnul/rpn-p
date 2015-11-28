@@ -17,7 +17,7 @@ class MainWindowController(QWidget):
         parsed_list = parser.parse()
 
         self.ui.postfix_expr_text_edit.clear()
-        if parsed_list != []:
+        if parsed_list:
             self.ui.postfix_expr_text_edit.setText(str(parsed_list))
         else:
             invalid_message_box = QMessageBox()
