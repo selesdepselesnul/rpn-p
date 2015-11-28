@@ -56,7 +56,8 @@ class RpnParser(object):
                 break
             self.postfix_list.append(self.operator_stack.pop())
 
-    def is_greater(self, op1, op2):
+    @staticmethod
+    def is_greater(op1, op2):
         def is_lower_op(op):
             return op == '+' or op == '-'
 
@@ -67,8 +68,10 @@ class RpnParser(object):
                ((op1 == '^') and (is_mid_op(op2) or is_lower_op(op2))) or \
                ( is_mid_op(op1) and is_lower_op(op2) )
 
-    def is_operand(self, any_string):
-        return re.search('\\w', any_string)
+    @staticmethod
+    def is_operand(any_string):
+        return re.search('[a-zA-Z]', any_string)
 
-    def is_operator(self, any_string):
+    @staticmethod
+    def is_operator(any_string):
         return re.search('[\+\-\*\/\^\(\)]', any_string)

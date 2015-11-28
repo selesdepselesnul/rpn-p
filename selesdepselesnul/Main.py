@@ -9,7 +9,7 @@ if __name__ == '__main__':
     main_window_controller.show()
     main_window_controller.setFixedWidth(359)
     main_window_controller.setFixedHeight(165)
-    main_window_controller.setWindowTitle('RPN-S')
+    main_window_controller.setWindowTitle('RPN-P')
     sys.exit(app.exec_())
 
 

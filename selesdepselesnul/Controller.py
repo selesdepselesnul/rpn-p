@@ -2,9 +2,9 @@ from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5 import uic
 from selesdepselesnul.Parser import RpnParser
 
+
 # author : Moch Deden (https://github.com/selesdepelesnul)
 class MainWindowController(QWidget):
-
 
     def __init__(self):
         super().__init__()
