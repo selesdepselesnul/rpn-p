@@ -24,21 +24,21 @@ class RpnParser(object):
         self.postfix_list = []
 
     def parse(self):
-        for i in self.infix_list:
-            if RpnParser.__is_operand(i):
-                self.postfix_list.append(i)
-            elif RpnParser.__is_operator(i):
+        for char in self.infix_list:
+            if RpnParser.__is_operand(char):
+                self.postfix_list.append(char)
+            elif RpnParser.__is_operator(char):
                 if self.operator_stack.is_empty():
-                    self.operator_stack.push(i)
-                elif i == '(':
-                    self.operator_stack.push(i)
-                elif i == ')':
+                    self.operator_stack.push(char)
+                elif char == '(':
+                    self.operator_stack.push(char)
+                elif char == ')':
                     self.__pop_operator_to_end_expr()
-                elif self.__is_greater(i, self.operator_stack.peek()):
-                    self.operator_stack.push(i)
+                elif self.__is_greater(char, self.operator_stack.peek()):
+                    self.operator_stack.push(char)
                 else:
-                    self.__pop_until_greater(i)
-                    self.operator_stack.push(i)
+                    self.__pop_until_greater(char)
+                    self.operator_stack.push(char)
             else:
                 return []
 
