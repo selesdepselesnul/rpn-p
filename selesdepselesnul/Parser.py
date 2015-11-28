@@ -2,6 +2,10 @@ import re
 
 
 # author : Moch Deden (https://github.com/selesdepelesnul)
+VALID_OPERAND = '[a-zA-Z]'
+VALID_OPERATOR = '[\+\-\*/\^\(\)]'
+
+
 class Stack(list):
     def push(self, value):
         self.append(value)
@@ -29,28 +33,28 @@ class RpnParser(object):
                 elif i == '(':
                     self.operator_stack.push(i)
                 elif i == ')':
-                    self.pop_operator_to_end_expr()
+                    self.__pop_operator_to_end_expr()
                 elif self.__is_greater(i, self.operator_stack.peek()):
                     self.operator_stack.push(i)
                 else:
-                    self.pop_until_greater(i)
+                    self.__pop_until_greater(i)
                     self.operator_stack.push(i)
             else:
                 return []
 
-        self.fill_postfix_stack()
+        self.__fill_postfix_stack()
         return self.postfix_list
 
-    def fill_postfix_stack(self):
+    def __fill_postfix_stack(self):
         while not self.operator_stack.is_empty():
             self.postfix_list.append(self.operator_stack.pop())
 
-    def pop_operator_to_end_expr(self):
+    def __pop_operator_to_end_expr(self):
         while self.operator_stack.peek() != '(':
             self.postfix_list.append(self.operator_stack.pop())
         self.operator_stack.pop()
 
-    def pop_until_greater(self, i):
+    def __pop_until_greater(self, i):
         while not self.operator_stack.is_empty():
             if RpnParser.__is_greater(i, self.operator_stack.peek()):
                 break
@@ -70,8 +74,8 @@ class RpnParser(object):
 
     @staticmethod
     def __is_operand(any_string):
-        return re.search('[a-zA-Z]', any_string)
+        return re.search(VALID_OPERAND, any_string)
 
     @staticmethod
     def __is_operator(any_string):
-        return re.search('[\+\-\*/\^\(\)]', any_string)
+        return re.search(VALID_OPERATOR, any_string)
